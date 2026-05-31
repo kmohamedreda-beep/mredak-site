@@ -431,6 +431,8 @@ function fmt(s) {
   return Math.floor(s / 60) + ':' + String(Math.floor(s % 60)).padStart(2, '0');
 }
 
+// ─────────────────────────────────────
+
 (function() {
   var currentLang = 'fr';
   window.switchBriefLang = function(lang) {
