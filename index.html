@@ -652,7 +652,7 @@
   <p class="intro-name">Mohammed Reda Khiar</p>
   <p class="intro-sub">Voix-off · Doublage · Narration</p>
   <div class="intro-listen-wrap">
-    <button type="button" class="intro-play-btn" id="introPlayBtn" onclick="toggleIntroAudio()" aria-label="Écouter l'intro">
+    <button type="button" class="intro-play-btn" id="introPlayBtn" aria-label="Écouter l'intro">
       <svg id="introBtnIcon" width="14" height="16" viewBox="0 0 14 16" fill="none">
         <path d="M1 1.5L13 8L1 14.5V1.5Z" fill="#378ADD"/>
       </svg>
@@ -671,7 +671,7 @@
   <audio id="introAudio" preload="none">
     <source src="audio/intro_reel.mp3" type="audio/mpeg">
   </audio>
-  <button type="button" class="intro-skip" onclick="skipIntro()">Passer →</button>
+  <button type="button" class="intro-skip" id="introSkipBtn">Passer →</button>
 </div>
 
 <!-- ══════════════════ NAV ══════════════════ -->
@@ -684,13 +684,13 @@
       <a href="#demos" class="nav-anchor-btn" data-i18n="nav_demos" style="font-size:11px;letter-spacing:.12em;">Écouter</a>
     </div>
     <div class="nav-lang">
-      <button type="button" class="lang-btn active" data-lang="fr" onclick="setLang('fr')" aria-label="Passer en français" aria-pressed="true">FR</button>
+      <button type="button" class="lang-btn active" data-lang="fr" aria-label="Passer en français" aria-pressed="true">FR</button>
       <span class="lang-sep">|</span>
-      <button type="button" class="lang-btn" data-lang="en" onclick="setLang('en')" aria-label="Switch to English" aria-pressed="false">EN</button>
+      <button type="button" class="lang-btn" data-lang="en" aria-label="Switch to English" aria-pressed="false">EN</button>
       <span class="lang-sep">|</span>
-      <button type="button" class="lang-btn" data-lang="ar" onclick="setLang('ar')" aria-label="التبديل إلى العربية" aria-pressed="false">AR</button>
+      <button type="button" class="lang-btn" data-lang="ar" aria-label="التبديل إلى العربية" aria-pressed="false">AR</button>
     </div>
-    <a href="#contact" class="nav-cta" data-i18n="nav_cta" onclick="track('contact_click',{method:'nav'})">Un projet ? Parlons-en.</a>
+    <a href="#contact" class="nav-cta" data-i18n="nav_cta" data-track="contact_click" data-track-key="method" data-track-value="nav">Un projet ? Parlons-en.</a>
   </nav>
 </header>
 
@@ -705,7 +705,7 @@
           <h1 class="hero-signature" data-i18n="hero_signature">Pour mieux dire ce qui compte.</h1>
           <p class="hero-subtitle" data-i18n="hero_subtitle">Voix-off · Doublage · Narration — FR · AR · EN MENA</p>
           <!-- Mini player intégré au hero -->
-          <div class="hero-mini-player" onclick="toggleMiniAudio()" role="button" aria-label="Écouter l'intro">
+          <div class="hero-mini-player" id="heroMiniPlayer" role="button" aria-label="Écouter l'intro">
             <button type="button" class="mini-play-btn" id="miniPlayBtn" aria-label="Lecture">
               <svg id="miniBtnIcon" width="10" height="12" viewBox="0 0 10 12" fill="none">
                 <path d="M0 .5L10 6 0 11.5V.5Z" fill="#378ADD"/>
@@ -719,8 +719,8 @@
             </div>
           </div>
           <div class="hero-actions">
-            <a href="#contact" class="btn-gold" data-i18n="hero_cta" onclick="track('contact_click',{method:'hero_cta'})">Un projet ? Parlons-en.</a>
-            <a href="#demos" class="btn-blue" onclick="track('demos_click',{from:'hero'})">
+            <a href="#contact" class="btn-gold" data-i18n="hero_cta" data-track="contact_click" data-track-key="method" data-track-value="hero_cta">Un projet ? Parlons-en.</a>
+            <a href="#demos" class="btn-blue" data-track="demos_click" data-track-key="from" data-track-value="hero">
               <svg width="10" height="12" viewBox="0 0 10 12" fill="none">
                 <path d="M0 .5L10 6 0 11.5V.5Z" fill="#378ADD"/>
               </svg>
@@ -805,13 +805,13 @@
       <div class="demo-lang-tabs" id="demoLangTabs" role="tablist" aria-label="Langue des démos audio"></div>
       <div class="demo-genre-tabs" id="demoGenreTabs"></div>
       <div class="audio-player" id="demo-tabpanel" role="tabpanel" aria-live="polite" aria-label="Lecteur audio">
-        <button type="button" class="aud-btn" id="demoPlayBtn" onclick="toggleDemoAudio()" aria-label="Lecture">
+        <button type="button" class="aud-btn" id="demoPlayBtn" aria-label="Lecture">
           <svg class="icon-play" width="12" height="14" viewBox="0 0 12 14" fill="none"><path d="M0 .5 12 7 0 13.5V.5Z" fill="#378ADD"/></svg>
           <svg class="icon-pause" style="display:none" width="12" height="12" viewBox="0 0 12 12" fill="none"><rect x="0" y="0" width="4" height="12" fill="white"/><rect x="8" y="0" width="4" height="12" fill="white"/></svg>
         </button>
         <div class="aud-info">
           <p class="aud-label" id="demoLabel">FR · Showreel</p>
-          <div class="aud-bar-wrap" onclick="seekDemoAudio(event)">
+          <div class="aud-bar-wrap" id="audBarWrap">
             <div class="aud-bar" id="demoBar"></div>
           </div>
           <p class="aud-time" id="demoTime">0:00 / --:--</p>
@@ -826,8 +826,8 @@
     <div class="container">
       <h2 id="h2-contact" class="section-title" data-i18n="contact_title">Contact</h2>
       <div class="contact-btns">
-        <a href="mailto:reda@mredak.com" class="btn-gold" onclick="track('contact_click',{method:'email'})">reda@mredak.com</a>
-        <a href="https://wa.me/213662746914" target="_blank" rel="noopener noreferrer" class="btn-blue" aria-label="Contacter par WhatsApp (ouvre l'application)" onclick="track('contact_click',{method:'whatsapp'})">
+        <a href="mailto:reda@mredak.com" class="btn-gold" data-track="contact_click" data-track-key="method" data-track-value="email">reda@mredak.com</a>
+        <a href="https://wa.me/213662746914" target="_blank" rel="noopener noreferrer" class="btn-blue" aria-label="Contacter par WhatsApp (ouvre l'application)" data-track="contact_click" data-track-key="method" data-track-value="whatsapp">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true">
             <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" fill="#378ADD"/>
           </svg>
@@ -839,9 +839,9 @@
 
       <div class="brief-form-wrapper">
         <div class="brief-lang-toggle">
-          <button type="button" class="brief-lang-btn active" data-lang="fr" onclick="switchBriefLang('fr')" aria-pressed="true" aria-label="Formulaire en français">FR</button>
-          <button type="button" class="brief-lang-btn" data-lang="en" onclick="switchBriefLang('en')" aria-pressed="false" aria-label="Form in English">EN</button>
-          <button type="button" class="brief-lang-btn" data-lang="ar" onclick="switchBriefLang('ar')" aria-pressed="false" aria-label="نموذج بالعربية">AR</button>
+          <button type="button" class="brief-lang-btn active" data-lang="fr" aria-pressed="true" aria-label="Formulaire en français">FR</button>
+          <button type="button" class="brief-lang-btn" data-lang="en" aria-pressed="false" aria-label="Form in English">EN</button>
+          <button type="button" class="brief-lang-btn" data-lang="ar" aria-pressed="false" aria-label="نموذج بالعربية">AR</button>
         </div>
         <p class="brief-intro" id="brief-intro-fr">Partagez les détails de votre projet. Je reviens vers vous sous 2h.</p>
         <p class="brief-intro" id="brief-intro-en" style="display:none">Share your project details. I'll get back to you within 2 hours.</p>
@@ -961,8 +961,8 @@
 <div id="cookieBanner" role="region" aria-label="Cookies">
   <span>Ce site utilise des cookies d'analyse (Google Analytics) pour améliorer l'expérience. <a href="#mentions">En savoir plus</a>.</span>
   <div class="cookie-actions">
-    <button type="button" class="cookie-btn cookie-decline" onclick="dismissCookies(false)">Refuser</button>
-    <button type="button" class="cookie-btn cookie-accept" onclick="dismissCookies(true)">Accepter</button>
+    <button type="button" class="cookie-btn cookie-decline">Refuser</button>
+    <button type="button" class="cookie-btn cookie-accept">Accepter</button>
   </div>
 </div>
 
@@ -979,14 +979,14 @@
 
 <div id="lightbox" role="dialog" aria-modal="true" aria-label="Lecteur vidéo">
   <div class="lb-inner" id="lbInner">
-    <button type="button" class="lb-close" onclick="closeLightbox()" aria-label="Fermer">✕</button>
+    <button type="button" class="lb-close" aria-label="Fermer">✕</button>
   </div>
 </div>
 
 
 
 
-<button type="button" class="scroll-top" id="scrollTop" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Retour en haut">↑</button>
+<button type="button" class="scroll-top" id="scrollTop" aria-label="Retour en haut">↑</button>
 <script src="/main.js" defer></script>
 </body>
 </html>

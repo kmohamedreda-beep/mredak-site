@@ -101,6 +101,7 @@ document.addEventListener('DOMContentLoaded', () => {
   window.addEventListener('scroll', () => {
     scrollBtn.classList.toggle('visible', window.scrollY > 400);
   });
+  scrollBtn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
 
   // Skip intro if seen this session
   if (sessionStorage.getItem('introSeen')) {
@@ -109,6 +110,44 @@ document.addEventListener('DOMContentLoaded', () => {
     introEl.setAttribute('aria-hidden', 'true');
     introEl.querySelectorAll('button, audio').forEach(el => el.setAttribute('tabindex', '-1'));
   }
+
+  document.getElementById('introPlayBtn').addEventListener('click', toggleIntroAudio);
+  document.getElementById('introSkipBtn').addEventListener('click', skipIntro);
+  document.getElementById('heroMiniPlayer').addEventListener('click', toggleMiniAudio);
+  document.getElementById('demoPlayBtn').addEventListener('click', toggleDemoAudio);
+  document.getElementById('audBarWrap').addEventListener('click', seekDemoAudio);
+
+  const cookieBanner = document.getElementById('cookieBanner');
+  cookieBanner.querySelector('.cookie-decline').addEventListener('click', () => dismissCookies(false));
+  cookieBanner.querySelector('.cookie-accept').addEventListener('click', () => dismissCookies(true));
+
+  document.querySelectorAll('.lang-btn').forEach(btn => {
+    btn.addEventListener('click', () => setLang(btn.dataset.lang));
+  });
+  document.querySelectorAll('.brief-lang-btn').forEach(btn => {
+    btn.addEventListener('click', () => switchBriefLang(btn.dataset.lang));
+  });
+  document.querySelectorAll('[data-track]').forEach(el => {
+    el.addEventListener('click', () => {
+      const props = {};
+      if (el.dataset.trackKey) props[el.dataset.trackKey] = el.dataset.trackValue;
+      track(el.dataset.track, props);
+    });
+  });
+
+  document.getElementById('videosGrid').addEventListener('click', (e) => {
+    const btn = e.target.closest('.play-btn');
+    if (btn) playYT(btn.dataset.videoId, btn.closest('.yt-facade'));
+  });
+  document.getElementById('demoLangTabs').addEventListener('click', (e) => {
+    const btn = e.target.closest('.demo-lang-btn');
+    if (btn) switchDemoLang(btn.dataset.lang);
+  });
+  document.getElementById('demoGenreTabs').addEventListener('click', (e) => {
+    const btn = e.target.closest('.demo-genre-btn');
+    if (btn) switchDemoGenre(btn.dataset.genre);
+  });
+
   buildTicker();
   initCookieBanner();
   buildVideos();
@@ -116,7 +155,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initVideoFilter();
   applyLang(currentLang);
   document.getElementById('lightbox').addEventListener('click', function(e) {
-    if (e.target === this) closeLightbox();
+    if (e.target === this || e.target.closest('.lb-close')) closeLightbox();
   });
   // Mini player seeks
   document.getElementById('miniBarWrap').addEventListener('click', function(e) {
@@ -234,7 +273,7 @@ function buildVideos() {
   grid.innerHTML = VIDEOS.map(v => `
     <div class="vid-card" data-lang="${v.lang}">
       <div class="yt-facade" data-videoid="${v.id}">
-        <button type="button" class="play-btn" onclick="playYT('${v.id}', this.closest('.yt-facade'))" aria-label="Lire la vidéo : ${v.client}">
+        <button type="button" class="play-btn" data-video-id="${v.id}" aria-label="Lire la vidéo : ${v.client}">
           <svg width="12" height="14" viewBox="0 0 12 14" fill="none"><path d="M0 .5 12 7 0 13.5V.5Z" fill="#378ADD"/></svg>
         </button>
       </div>
@@ -295,7 +334,7 @@ function closeLightbox() {
   const inner = document.getElementById('lbInner');
   lb.classList.remove('open');
   document.body.style.overflow = '';
-  inner.innerHTML = `<button type="button" class="lb-close" onclick="closeLightbox()" aria-label="Fermer">✕</button>`;
+  inner.innerHTML = `<button type="button" class="lb-close" aria-label="Fermer">✕</button>`;
 }
 document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
 
@@ -329,7 +368,7 @@ function buildDemoLangTabs() {
       `<button type="button" role="tab" id="tab-lang-${lang}"
         aria-selected="${lang===demoLang?'true':'false'}" aria-controls="demo-tabpanel"
         class="demo-lang-btn${lang===demoLang?' active':''}"
-        onclick="switchDemoLang('${lang}')">${DEMOS[lang].label}</button>`
+        data-lang="${lang}">${DEMOS[lang].label}</button>`
     ).join('');
 }
 
@@ -339,7 +378,7 @@ function buildDemoGenreTabs() {
       `<button type="button" role="tab" id="tab-genre-${g.key}"
         aria-selected="${g.key===demoGenre?'true':'false'}" aria-controls="demo-tabpanel"
         class="demo-genre-btn${g.key===demoGenre?' active':''}"
-        onclick="switchDemoGenre('${g.key}')">${g.label}</button>`
+        data-genre="${g.key}">${g.label}</button>`
     ).join('');
 }
 
