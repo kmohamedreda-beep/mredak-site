@@ -1,3 +1,8 @@
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-5634FL003H');
+
 const i18n = {
   fr: {
     nav_cta:"Un projet ? Parlons-en.", hero_name:"Mohammed Reda Khiar",
