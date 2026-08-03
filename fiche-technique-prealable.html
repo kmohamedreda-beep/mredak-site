@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="fr" dir="ltr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<title>Fiche technique préalable — MRK Voices</title>
+<meta name="robots" content="noindex,nofollow">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self' https://formspree.io; form-action 'self' https://formspree.io; base-uri 'self'; upgrade-insecure-requests">
+<meta http-equiv="X-Frame-Options" content="SAMEORIGIN">
+<meta http-equiv="X-Content-Type-Options" content="nosniff">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;500;600&family=DM+Sans:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg-primary:  #0a0d12;
+    --bg-secondary:#111620;
+    --text-primary:#e8edf2;
+    --text-muted:  #4a5568;
+    --border:      #1e2530;
+    --accent-blue: #378ADD;
+
+    --bone:  #E9E7E0;
+    --paper: #F2F0EA;
+    --ink:   #191F26;
+    --muted: #77726A;
+    --rule:  #C3BFB4;
+    --signal:#2F6B54;
+    --peak:  #C98A1E;
+    --hot:   #B0432F;
+  }
+
+  *{box-sizing:border-box;}
+
+  html{-webkit-text-size-adjust:100%;scroll-behavior:smooth;}
+
+  body{
+    margin:0;
+    background:var(--bg-primary);
+    color:var(--ink);
+    font-family:'DM Sans',sans-serif;
+    font-size:16px;
+    line-height:1.55;
+    overflow-x:hidden;
+  }
+
+  a{color:inherit;text-decoration:none;}
+
+  /* ── SKIP LINK ── */
+  .skip-link{
+    position:absolute;top:-40px;left:0;
+    background:var(--accent-blue);color:#fff;
+    padding:8px 16px;font-size:13px;
+    z-index:9999;transition:top .2s;
+  }
+  .skip-link:focus{top:0;}
+
+  /* ── NAV (gabarit du site) ── */
+  nav{
+    position:fixed;top:0;left:0;right:0;
+    height:60px;background:var(--bg-primary);
+    border-bottom:1px solid var(--border);
+    display:flex;align-items:center;justify-content:space-between;
+    padding:0 32px;z-index:100;
+  }
+  .nav-brand{
+    font-size:11px;letter-spacing:.2em;
+    text-transform:uppercase;color:var(--text-muted);
+    white-space:nowrap;
+  }
+  .nav-anchor-btn{
+    font-size:11px;letter-spacing:.12em;
+    color:var(--text-muted);padding:4px 10px;
+    border-radius:3px;transition:color .2s;
+  }
+  .nav-anchor-btn:hover{color:var(--text-primary);}
+  .nav-cta{
+    font-size:12px;letter-spacing:.06em;
+    color:var(--accent-blue);padding:7px 16px;
+    border:1px solid var(--accent-blue);border-radius:4px;
+    transition:background .2s, color .2s;white-space:nowrap;
+  }
+  .nav-cta:hover{background:rgba(55,138,221,.12);color:var(--text-primary);}
+
+  @media (max-width:768px){
+    nav{padding:0 16px;}
+    .nav-brand{display:none;}
+    .nav-anchors{display:none !important;}
+    .nav-cta{font-size:11px;padding:6px 12px;}
+  }
+
+  main{padding-top:60px;}
+
+  /* ── FOOTER (gabarit du site) ── */
+  footer{
+    padding:24px;text-align:center;
+    border-top:1px solid var(--border);background:var(--bg-secondary);
+  }
+  .footer-text{font-size:11px;color:var(--text-muted);letter-spacing:.1em;}
+  .footer-linkedin{
+    display:inline-flex;align-items:center;justify-content:center;
+    margin-top:12px;color:var(--text-muted);transition:color .2s;
+  }
+  .footer-linkedin:hover{color:var(--accent-blue);}
+
+  /* ── SHEET (fiche — inchangé) ── */
+  .sheet{
+    max-width:660px;
+    margin:0 auto;
+    background:var(--paper);
+    min-height:100vh;
+    border-left:1px solid var(--rule);
+    border-right:1px solid var(--rule);
+  }
+
+  /* ---- meter header ---- */
+  .head{
+    padding:28px 22px 0;
+  }
+
+  .brandline{
+    display:flex;
+    justify-content:space-between;
+    align-items:baseline;
+    font-family:'Barlow Condensed',sans-serif;
+    font-size:13px;
+    letter-spacing:.18em;
+    text-transform:uppercase;
+    color:var(--muted);
+    border-bottom:1px solid var(--rule);
+    padding-bottom:8px;
+  }
+
+  h1{
+    font-family:'Barlow Condensed',sans-serif;
+    font-weight:600;
+    font-size:clamp(30px,7vw,42px);
+    line-height:1.02;
+    letter-spacing:-.005em;
+    text-transform:uppercase;
+    margin:18px 0 10px;
+    color:var(--ink);
+  }
+
+  .standfirst{
+    font-size:15px;
+    color:var(--muted);
+    max-width:46ch;
+    margin:0 0 22px;
+  }
+
+  /* ---- signature: segmented level meter ---- */
+  .meter{
+    position:sticky;
+    top:60px;
+    z-index:5;
+    background:var(--paper);
+    padding:10px 22px 12px;
+    border-bottom:1px solid var(--rule);
+  }
+
+  .meter-scale{
+    display:flex;
+    gap:3px;
+    height:14px;
+  }
+
+  .seg{
+    flex:1;
+    background:var(--rule);
+    opacity:.45;
+    transition:opacity .18s ease, background .18s ease;
+  }
+
+  .seg.on{opacity:1;background:var(--signal);}
+  .seg.on.warm{background:var(--peak);}
+  .seg.on.hot{background:var(--hot);}
+
+  .meter-legend{
+    display:flex;
+    justify-content:space-between;
+    font-family:'Barlow Condensed',sans-serif;
+    font-size:12px;
+    letter-spacing:.14em;
+    text-transform:uppercase;
+    color:var(--muted);
+    margin-top:6px;
+  }
+
+  #count{color:var(--ink);font-weight:600;}
+
+  /* ---- sections ---- */
+  section.q-section{
+    padding:26px 22px 6px;
+    border-bottom:1px solid var(--rule);
+  }
+
+  .sec-head{
+    display:flex;
+    align-items:baseline;
+    gap:12px;
+    margin-bottom:18px;
+  }
+
+  .sec-id{
+    font-family:'Barlow Condensed',sans-serif;
+    font-size:12px;
+    letter-spacing:.16em;
+    color:var(--paper);
+    background:var(--ink);
+    padding:2px 7px 1px;
+  }
+
+  .sec-head h2{
+    font-family:'Barlow Condensed',sans-serif;
+    font-weight:500;
+    font-size:22px;
+    letter-spacing:.05em;
+    text-transform:uppercase;
+    margin:0;
+    color:var(--ink);
+  }
+
+  .q{margin-bottom:20px;}
+
+  label{
+    display:block;
+    font-weight:500;
+    font-size:15px;
+    margin-bottom:5px;
+  }
+
+  .hint{
+    display:block;
+    font-size:13.5px;
+    color:var(--muted);
+    font-style:italic;
+    margin-bottom:7px;
+  }
+
+  input[type=text],input[type=tel],textarea,select{
+    width:100%;
+    font-family:'DM Sans',sans-serif;
+    font-size:16px;
+    color:var(--ink);
+    background:transparent;
+    border:none;
+    border-bottom:1.5px solid var(--rule);
+    padding:6px 2px;
+    border-radius:0;
+    appearance:none;
+  }
+
+  textarea{resize:vertical;min-height:52px;line-height:1.5;}
+
+  select{
+    border:1.5px solid var(--rule);
+    padding:9px 8px;
+    background:var(--paper);
+  }
+
+  input:focus,textarea:focus,select:focus{
+    outline:none;
+    border-color:var(--signal);
+    background:rgba(47,107,84,.045);
+  }
+
+  input:focus-visible,textarea:focus-visible,select:focus-visible,button:focus-visible{
+    outline:2px solid var(--signal);
+    outline-offset:2px;
+  }
+
+  /* ---- photo callout ---- */
+  .callout{
+    border:1.5px solid var(--ink);
+    padding:16px 16px 14px;
+    margin:4px 0 22px;
+  }
+
+  .callout .tag{
+    font-family:'Barlow Condensed',sans-serif;
+    font-size:12px;
+    letter-spacing:.16em;
+    text-transform:uppercase;
+    color:var(--hot);
+    display:block;
+    margin-bottom:5px;
+  }
+
+  .callout p{margin:0;font-size:15px;}
+
+  /* ---- send / export ---- */
+  .foot{padding:26px 22px 40px;}
+
+  button{
+    width:100%;
+    font-family:'Barlow Condensed',sans-serif;
+    font-size:18px;
+    letter-spacing:.12em;
+    text-transform:uppercase;
+    color:var(--paper);
+    background:var(--ink);
+    border:none;
+    padding:16px;
+    cursor:pointer;
+    transition:background .15s ease;
+  }
+
+  button:hover{background:var(--signal);}
+  button.done{background:var(--signal);}
+  button:disabled{opacity:.55;cursor:not-allowed;}
+
+  .foot p{
+    font-size:14px;
+    color:var(--muted);
+    margin:14px 0 0;
+  }
+
+  #fiche-error{
+    color:var(--hot);
+    font-size:14px;
+    margin:14px 0 0;
+  }
+
+  .fallback{margin-top:30px;padding-top:22px;border-top:1px solid var(--rule);}
+  .fallback-label{
+    font-family:'Barlow Condensed',sans-serif;
+    font-size:12px;
+    letter-spacing:.16em;
+    text-transform:uppercase;
+    color:var(--muted);
+    margin:0 0 10px;
+  }
+  .fallback button{background:transparent;color:var(--ink);border:1.5px solid var(--ink);}
+  .fallback button:hover{background:var(--ink);color:var(--paper);}
+  .fallback button.done{background:var(--signal);color:var(--paper);border-color:var(--signal);}
+
+  .sig{
+    font-family:'Barlow Condensed',sans-serif;
+    font-size:13px;
+    letter-spacing:.16em;
+    text-transform:uppercase;
+    color:var(--muted);
+    margin-top:30px;
+    padding-top:12px;
+    border-top:1px solid var(--rule);
+  }
+
+  #out{
+    width:100%;
+    margin-top:16px;
+    font-size:13px;
+    line-height:1.45;
+    font-family:'DM Sans',sans-serif;
+    color:var(--ink);
+    min-height:150px;
+    border:1px solid var(--rule);
+    padding:10px;
+    display:none;
+  }
+
+  #fiche-confirm{
+    font-family:'Barlow Condensed',sans-serif;
+    font-size:18px;
+    letter-spacing:.12em;
+    text-transform:uppercase;
+    text-align:center;
+    color:var(--paper);
+    background:var(--signal);
+    padding:16px;
+    margin:0;
+  }
+
+  @media (prefers-reduced-motion:reduce){
+    *{transition:none !important;}
+  }
+</style>
+</head>
+<body>
+<a href="#main-content" class="skip-link">Aller au contenu principal</a>
+
+<header>
+  <nav aria-label="Navigation principale">
+    <a href="/" class="nav-brand">Mohammed Reda Khiar</a>
+    <div class="nav-anchors" style="display:flex;gap:0;align-items:center;">
+      <a href="/#reviews" class="nav-anchor-btn">Avis</a>
+      <a href="/#videos" class="nav-anchor-btn">Crédits</a>
+      <a href="/#demos" class="nav-anchor-btn">Écouter</a>
+    </div>
+    <a href="/#contact" class="nav-cta">Un projet ? Parlons-en.</a>
+  </nav>
+</header>
+
+<main id="main-content">
+<div class="sheet">
+
+  <div class="head">
+    <div class="brandline"><span>MRK Voices</span><span>Diagnostic vocal</span></div>
+    <h1>Fiche technique préalable</h1>
+    <p class="standfirst">À remplir avant l'écoute. Cinq minutes. Ces réponses évitent que je vous conseille des corrections que votre matériel ou votre pièce rendent impossibles.</p>
+  </div>
+
+  <div class="meter">
+    <div class="meter-scale" id="scale"></div>
+    <div class="meter-legend"><span>Niveau de remplissage</span><span><span id="count">0</span> / 22</span></div>
+  </div>
+
+  <form id="fiche-form" action="https://formspree.io/f/xbdnnpvq" method="POST">
+  <input type="hidden" name="_subject" value="Fiche technique — diagnostic vocal">
+  <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off">
+
+  <section class="q-section">
+    <div class="sec-head"><span class="sec-id">A</span><h2>Parcours</h2></div>
+    <div class="q"><label for="q1">Depuis combien de temps enregistrez-vous votre voix ?</label><input type="text" id="q1" name="Ancienneté" data-q="Ancienneté"></div>
+    <div class="q"><label for="q2">Formation vocale, théâtrale ou radio suivie ?</label><span class="hint">Laquelle, et sur quelle durée.</span><textarea id="q2" name="Formation" data-q="Formation"></textarea></div>
+    <div class="q"><label for="q3">Travaux déjà diffusés ou livrés à un client ?</label><textarea id="q3" name="Travaux livrés" data-q="Travaux livrés"></textarea></div>
+    <div class="q"><label for="q4">Langues que vous proposez</label><span class="hint">Et celle que vous sentez la plus solide.</span><textarea id="q4" name="Langues" data-q="Langues"></textarea></div>
+  </section>
+
+  <section class="q-section">
+    <div class="sec-head"><span class="sec-id">B</span><h2>Chaîne de captation</h2></div>
+    <div class="q"><label for="q5">Microphone — marque et modèle exacts</label><input type="text" id="q5" name="Micro" data-q="Micro"></div>
+    <div class="q"><label for="q6">Interface audio ou carte son</label><span class="hint">Ou branchement direct sur l'ordinateur / le téléphone.</span><input type="text" id="q6" name="Interface" data-q="Interface"></div>
+    <div class="q"><label for="q7">Casque de retour pendant la prise</label><select id="q7" name="Casque de retour" data-q="Casque de retour"><option value="">—</option><option>Oui, fermé</option><option>Oui, ouvert</option><option>Oui, modèle inconnu</option><option>Non</option></select></div>
+    <div class="q"><label for="q8">Logiciel d'enregistrement</label><input type="text" id="q8" name="Logiciel" data-q="Logiciel"></div>
+  </section>
+
+  <section class="q-section">
+    <div class="sec-head"><span class="sec-id">C</span><h2>Pièce et acoustique</h2></div>
+
+    <div class="callout">
+      <span class="tag">Le plus utile de toute la fiche</span>
+      <p>Prenez une photo de votre poste tel qu'il est au moment de la prise, sans rien ranger, et joignez-la à votre envoi. Une photo m'apprend plus sur votre son que dix réponses écrites.</p>
+    </div>
+
+    <div class="q"><label for="q9">Où enregistrez-vous ?</label><select id="q9" name="Lieu" data-q="Lieu"><option value="">—</option><option>Chambre</option><option>Salon</option><option>Bureau</option><option>Placard / dressing</option><option>Cabine ou booth</option><option>Studio extérieur</option><option>Autre</option></select></div>
+    <div class="q"><label for="q10">Traitement acoustique en place</label><span class="hint">Décrivez ce qu'il y a réellement : mousse, couvertures, rideaux, tapis, ou rien du tout. « Rien » est une réponse utile.</span><textarea id="q10" name="Acoustique" data-q="Acoustique"></textarea></div>
+    <div class="q"><label for="q11">Distance bouche / micro, approximative</label><input type="text" id="q11" name="Distance micro" data-q="Distance micro"></div>
+    <div class="q"><label for="q12">Filtre anti-pop ou bonnette</label><select id="q12" name="Anti-pop" data-q="Anti-pop"><option value="">—</option><option>Filtre anti-pop</option><option>Bonnette mousse</option><option>Les deux</option><option>Aucun</option></select></div>
+    <div class="q"><label for="q13">Bruits de fond récurrents</label><span class="hint">Rue, voisins, climatisation, réfrigérateur, ventilateur d'ordinateur.</span><textarea id="q13" name="Bruits de fond" data-q="Bruits de fond"></textarea></div>
+  </section>
+
+  <section class="q-section">
+    <div class="sec-head"><span class="sec-id">D</span><h2>Après la prise</h2></div>
+    <div class="q"><label for="q14">Que faites-vous au fichier une fois enregistré ?</label><span class="hint">Rien, montage, EQ, compression, de-esser, débruitage.</span><textarea id="q14" name="Traitement appliqué" data-q="Traitement appliqué"></textarea></div>
+    <div class="q"><label for="q15">Ce traitement, c'est vous ou quelqu'un d'autre ?</label><input type="text" id="q15" name="Auteur du traitement" data-q="Auteur du traitement"></div>
+  </section>
+
+  <section class="q-section">
+    <div class="sec-head"><span class="sec-id">E</span><h2>Méthode de travail</h2></div>
+    <div class="q"><label for="q16">Combien de prises en moyenne avant de garder la bonne ?</label><input type="text" id="q16" name="Nombre de prises" data-q="Nombre de prises"></div>
+    <div class="q"><label for="q17">Debout ou assise ?</label><select id="q17" name="Position" data-q="Position"><option value="">—</option><option>Debout</option><option>Assise</option><option>Les deux selon le texte</option></select></div>
+    <div class="q"><label for="q18">Échauffement vocal avant la prise ?</label><span class="hint">Lequel, et combien de temps.</span><textarea id="q18" name="Échauffement" data-q="Échauffement"></textarea></div>
+    <div class="q"><label for="q19">Le fichier que vous m'avez envoyé date de quand ?</label><input type="text" id="q19" name="Date du fichier" data-q="Date du fichier"></div>
+    <div class="q"><label for="q20">Combien de prises a-t-il demandé ?</label><input type="text" id="q20" name="Prises sur ce fichier" data-q="Prises sur ce fichier"></div>
+  </section>
+
+  <section class="q-section">
+    <div class="sec-head"><span class="sec-id">F</span><h2>Cadre</h2></div>
+    <div class="q"><label for="q21">Combien d'heures par semaine pouvez-vous consacrer à ce travail ?</label><input type="text" id="q21" name="Heures disponibles" data-q="Heures disponibles"></div>
+    <div class="q"><label for="q22">Ce que vous visez à douze mois, en une phrase</label><textarea id="q22" name="Objectif 12 mois" data-q="Objectif 12 mois"></textarea></div>
+  </section>
+
+  <div class="foot">
+    <button type="submit" id="fiche-submit-btn">Envoyer mes réponses</button>
+    <p id="fiche-confirm" style="display:none">Reçu, merci. Je reviens vers vous après l'écoute.</p>
+    <p id="fiche-error" style="display:none">L'envoi automatique a échoué. Copiez vos réponses ci-dessous et envoyez-les-moi par WhatsApp.</p>
+
+    <div class="fallback">
+      <p class="fallback-label">Ou directement, à tout moment</p>
+      <button type="button" id="copy">Copier mes réponses</button>
+      <p>Collez le texte copié dans votre message WhatsApp, avec la photo du poste.</p>
+      <textarea id="out" readonly aria-label="Réponses au format texte"></textarea>
+    </div>
+
+    <div class="sig">Reda Khiar — MRK Voices — mredak.com</div>
+  </div>
+  </form>
+
+</div>
+</main>
+
+<footer>
+  <p class="footer-text">© 2026 Mohammed Reda Khiar · mredak.com</p>
+  <a href="/#mentions" style="font-size:10px;letter-spacing:.1em;color:var(--text-muted);margin-top:8px;display:block;text-decoration:underline;">Mentions légales · Données personnelles</a>
+  <a class="footer-linkedin" href="https://linkedin.com/in/mohammedreda-khiar" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn Mohammed Reda Khiar">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+      <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+    </svg>
+  </a>
+  <p style="font-family:'DM Sans',sans-serif;font-size:1rem;color:var(--text-primary);letter-spacing:.08em;margin-top:10px;"><strong style="font-size:1.2em;vertical-align:-0.05em;">V</strong>oice is an <strong style="font-size:1.2em;vertical-align:-0.05em;">A</strong>sset.</p>
+</footer>
+
+<script src="/fiche.js" defer></script>
+</body>
+</html>
