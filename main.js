@@ -1,5 +1,13 @@
 window.dataLayer = window.dataLayer || [];
 function gtag(){dataLayer.push(arguments);}
+
+// Consent Mode v2 — déclaration par défaut AVANT config (requis Google)
+gtag('consent', 'default', {
+  analytics_storage: 'denied',
+  ad_storage: 'denied',
+  wait_for_update: 500
+});
+
 gtag('js', new Date());
 gtag('config', 'G-5634FL003H');
 
@@ -439,12 +447,14 @@ function setDemoPlayIcon(playing) {
   btn.querySelector('.icon-pause').style.display = playing ? ''     : 'none';
 }
 
-// Cookie consent
+// Cookie consent — Consent Mode v2
 function dismissCookies(accepted) {
   localStorage.setItem('cookieConsent', accepted ? 'accepted' : 'declined');
   document.getElementById('cookieBanner').classList.remove('visible');
-  if (!accepted && typeof gtag === 'function') {
-    gtag('consent', 'update', { analytics_storage: 'denied' });
+  if (typeof gtag === 'function') {
+    gtag('consent', 'update', {
+      analytics_storage: accepted ? 'granted' : 'denied'
+    });
   }
 }
 
@@ -454,6 +464,9 @@ function initCookieBanner() {
     setTimeout(() => {
       document.getElementById('cookieBanner').classList.add('visible');
     }, 1500);
+  } else if (consent === 'accepted' && typeof gtag === 'function') {
+    // Consentement déjà accordé lors d'une session précédente
+    gtag('consent', 'update', { analytics_storage: 'granted' });
   } else if (consent === 'declined' && typeof gtag === 'function') {
     gtag('consent', 'update', { analytics_storage: 'denied' });
   }
