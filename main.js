@@ -96,7 +96,7 @@ const DEMOS = {
   ]},
 };
 
-let currentLang  = localStorage.getItem('lang') || 'fr';
+let currentLang  = localStorage.getItem('lang') || 'en';
 let introPlaying = false;
 let miniPlaying  = false;
 let demoLang     = 'fr';
