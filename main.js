@@ -546,3 +546,15 @@ function fmt(s) {
     });
   });
 })();
+
+// GA4 — contact_click event
+document.addEventListener('click', function(e) {
+  var a = e.target.closest('a');
+  if (!a) return;
+  var href = a.href || '';
+  if (href.includes('mailto:') || href.includes('wa.me') || href.includes('#contact')) {
+    if (typeof gtag === 'function') {
+      gtag('event', 'contact_click', { link_url: href });
+    }
+  }
+});
