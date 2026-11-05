@@ -1,15 +1,4 @@
-window.dataLayer = window.dataLayer || [];
-function gtag(){dataLayer.push(arguments);}
-
-// Consent Mode v2 — déclaration par défaut AVANT config (requis Google)
-gtag('consent', 'default', {
-  analytics_storage: 'denied',
-  ad_storage: 'denied',
-  wait_for_update: 500
-});
-
-gtag('js', new Date());
-gtag('config', 'G-5634FL003H');
+// GA4 (consent par défaut + config) : initialisé une seule fois dans le <head> de index.html
 
 const i18n = {
   fr: {
@@ -551,6 +540,8 @@ function fmt(s) {
 document.addEventListener('click', function(e) {
   var a = e.target.closest('a');
   if (!a) return;
+  // Les liens déjà balisés data-track sont comptés par leur propre gestionnaire (évite le doublon)
+  if (a.hasAttribute('data-track')) return;
   var href = a.href || '';
   if (href.includes('mailto:') || href.includes('wa.me') || href.includes('#contact')) {
     if (typeof gtag === 'function') {
