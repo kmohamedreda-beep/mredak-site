@@ -36,8 +36,28 @@
   <script>
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
+    // Consent Mode v2 : le défaut doit précéder « config » (initialisation unique, ici)
+    gtag("consent", "default", {
+      analytics_storage: "denied",
+      ad_storage: "denied",
+      ad_user_data: "denied",
+      ad_personalization: "denied",
+      wait_for_update: 500
+    });
+    var internalTraffic = false;
+    try {
+      // Trafic interne : ouvrir mredak.com/?interne=1 une fois par appareil (?interne=0 pour retirer)
+      var q = new URLSearchParams(location.search).get("interne");
+      if (q === "1") localStorage.setItem("mrk_internal", "1");
+      if (q === "0") localStorage.removeItem("mrk_internal");
+      internalTraffic = localStorage.getItem("mrk_internal") === "1";
+      // Consentement déjà accordé lors d'une visite précédente : appliqué avant « config »
+      if (localStorage.getItem("cookieConsent") === "accepted") {
+        gtag("consent", "update", { analytics_storage: "granted" });
+      }
+    } catch (e) {}
     gtag("js", new Date());
-    gtag("config", "G-5634FL003H");
+    gtag("config", "G-5634FL003H", internalTraffic ? { traffic_type: "internal" } : {});
   </script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
